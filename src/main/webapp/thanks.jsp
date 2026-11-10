@@ -1,48 +1,53 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Murach's Java Servlets and JSP</title>
-    <link rel="stylesheet" href="styles/main.css" type="text/css"/>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
-    <h1>Thanks for joining our email list</h1>
+        <img src="images/logo.jpg" alt="logo murach">
+        <h1>Thanks for joining our email list</h1>
 
-    <p>Here is the information that you entered:</p>
+    <main>
+        <p>Here is the information that you entered:</p>
 
-    <label>First Name:</label>
-    <span>${user.firstName}</span><br>
+        <dl class="card">
+            <dt>First Name:</dt>
+            <dd>${user.firstName}</dd>
 
-    <label>Last Name:</label>
-    <span>${user.lastName}</span><br>
+            <dt>Last Name:</dt>
+            <dd>${user.lastName}</dd>
 
-    <label>Email:</label>
-    <span>${user.email}</span><br>
+            <dt>Email:</dt>
+            <dd>${user.email}</dd>
 
-    <label>Date of Birth:</label>
-    <span>${dateOfBirth}</span><br>
+            <dt>Date of Birth:</dt>
+            <dd>${user.dateOfBirth}</dd>
 
-    <label>Heard about us:</label>
-    <span>${source}</span><br>
+            <dt>Heard about us:</dt>
+            <dd>${survey.source}</dd>
 
-    <label>Announcements:</label>
-    <span>${receiveAnnouncements}</span><br>
+            <dt>Announcements:</dt>
+            <dd>${survey.receiveAnnouncements ? 'Yes' : 'No'}</dd>
 
-    <label>Special Offers:</label>
-    <span>${receiveOffers}</span><br>
+            <dt>Special Offers:</dt>
+            <dd>${survey.receiveOffers ? 'Yes' : 'No'}</dd>
 
-    <label>Contact method:</label>
-    <span>${contactMethod}</span><br>
+            <dt>Contact method:</dt>
+            <dd>${survey.contactMethod}</dd>
+        </dl>
 
-    <p>To enter another email address, click on the Back
-       button in your browser or the Return button shown
-       below.</p>
+        <p class="note">To enter another email address, click on the Back
+           button in your browser or the Return button shown below.</p>
 
-    <form action="emailList" method="get">
-        <input type="hidden" name="action" value="join">
-        <input type="submit" value="Return">
-    </form>
+        <form action="emailList" method="get">
+            <input type="hidden" name="action" value="join">
+            <input type="submit" value="Return">
+        </form>
+    </main>
 </body>
 </html>

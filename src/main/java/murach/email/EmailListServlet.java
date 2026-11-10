@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import murach.business.Survey;
 import murach.business.User;
 
 public class EmailListServlet extends HttpServlet {
@@ -19,50 +20,37 @@ public class EmailListServlet extends HttpServlet {
 
         String url = "/index.html";
 
-        // get current action
         String action = request.getParameter("action");
         if (action == null) {
-            action = "join";  // default action
+            action = "join";  
         }
 
-        // perform action and set URL to appropriate page
         if (action.equals("join")) {
             url = "/index.html";    // the "join" page
         }
         else if (action.equals("add")) {
-            // get parameters from the request (Bao gồm các trường mới từ form Survey)
+            // thông tin người dùng
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String email = request.getParameter("email");
-            String dateOfBirth = request.getParameter("dateOfBirth");
-            String source = request.getParameter("source");
+            String dateOfBirth = request.getParameter("dob");
 
-            // Đối với checkbox, nếu người dùng không tích chọn thì giá trị nhận được sẽ là null
-            String announcements = request.getParameter("announcements");
-            String offers = request.getParameter("offers");
+            // thông tin khảo sát (checkbox không tick thì getParameter trả về null)
+            String source = request.getParameter("heardFrom");
+            boolean receiveAnnouncements = request.getParameter("wantsAnnouncements") != null;
+            boolean receiveOffers = request.getParameter("wantsEmail") != null;
+            String contactMethod = request.getParameter("contactBy");
 
-            String contactMethod = request.getParameter("contact_method");
-
-            // Xử lý giá trị checkbox cho thân thiện nếu cần
-            String receiveAnnouncements = (announcements != null) ? "Yes" : "No";
-            String receiveOffers = (offers != null) ? "Yes" : "No";
-
-            // store data in User object and save User object in db
-            // (Lưu ý: Bạn có thể cập nhật thêm các thuộc tính này vào class User trong package murach.business nếu muốn lưu trữ đầy đủ)
-            User user = new User(firstName, lastName, email);
-//          UserDB.insert(user);
+            User user = new User(firstName, lastName, email, dateOfBirth);
+            Survey survey = new Survey(source, receiveAnnouncements, receiveOffers, contactMethod);
+            // UserDB.insert(user);
 
             request.setAttribute("user", user);
-            request.setAttribute("dateOfBirth", dateOfBirth);
-            request.setAttribute("source", source);
-            request.setAttribute("receiveAnnouncements", receiveAnnouncements);
-            request.setAttribute("receiveOffers", receiveOffers);
-            request.setAttribute("contactMethod", contactMethod);
+            request.setAttribute("survey", survey);
 
-            url = "/thanks.jsp";    // the "thanks" page
+            url = "/thanks.jsp";
         }
 
-        // forward request and response objects to specified URL
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);

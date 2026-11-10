@@ -11,15 +11,16 @@
     <h1>Survey</h1>
     <p>if you have a moment, we'd appreciate if you would fill out this survey.</p>
     <form action="survey" method="post">
+        <input type="hidden" name="action" value="add">
         <h2>Your information:</h2>
         <label>First Name</label>
-        <input type="text" name="firstName"><br>
+        <input type="text" name="firstName" required><br>
         <label>Last Name</label>
-        <input type="text" name="lastName"><br>
+        <input type="text" name="lastName" required><br>
         <label>Email</label>
-        <input type="text" name="email"><br>
+        <input type="email" name="email" required><br>
         <label>Date of Birth</label>
-        <input type="date" name="dob"><br>
+        <input type="date" name="dob" required><br>
 
         <h2>How did you hear about us?</h2>
         <input type="radio" name="heardFrom" value="search" checked>Search engine
